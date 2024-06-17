@@ -27,7 +27,29 @@ def display_instructions():
         else:
             print("Your to-do list.")
             for index,task in enumerate(tasks, start = 1):
-                print(f"(index). {task}")
+                print(f"(index). {task['description']} - Due: {task['due-date']} {task['due-time']}")
+
+
+    #Function to add task to the to-do list
+    def add_task():
+        description = input("Enter task description: ") 
+        due_date = input("Enter due date (DD-MM-YY): ")
+        due_time = input("Enter due-time (HH:MM): ")
+        try:
+             datetime.datetime.strptime(due_date, "%D-%M-%Y")
+             datetime.datetime.strptime(due_time, "%H:%M")       
+        except ValueError:
+             print("Invalid date or time format. Task not added.")
+             return
+
+        task = {
+            "description": description,
+            "due_date": due_date,
+            "due_time": due_time
+         }
+        
+        tasks.append(task)
+        print(f"Task '{description}' added to your to-do list")            
 
     def main():
         todo_list = ToDoList()
