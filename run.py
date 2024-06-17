@@ -20,8 +20,8 @@ def display_instructions():
     
     """)
 
-    #Function to display the to-do list
-    def display_tasks():
+#Function to display the to-do list
+def display_tasks():
         if not tasks:
             print("Your to-do list is empty.")
         else:
@@ -30,8 +30,8 @@ def display_instructions():
                 print(f"(index). {task['description']} - Due: {task['due-date']} {task['due-time']}")
 
 
-    #Function to add task to the to-do list
-    def add_task():
+#Function to add task to the to-do list
+def add_task():
         description = input("Enter task description: ") 
         due_date = input("Enter due date (DD-MM-YY): ")
         due_time = input("Enter due-time (HH:MM): ")
@@ -49,7 +49,25 @@ def display_instructions():
          }
         
         tasks.append(task)
-        print(f"Task '{description}' added to your to-do list")            
+        print(f"Task '{description}' added to your to-do list")   
+    
+
+#Function to remove a task from the to-do list
+def remove_task():
+    display_tasks()
+    if task:
+        try:
+            index = int(input("Enter the number of the task to remove")) - 1
+            if 0 <= index < len(tasks):
+                removed_task = tasks.pop(index)
+                print(f"Task '{description}' removed from your to-do list.")
+            else:
+                print("Invalid index")
+        except ValueError:
+            print("Invalid input. Please enter a number.")
+    else:
+        print("Your to-do list is already empty")            
+
 
     def main():
         todo_list = ToDoList()
