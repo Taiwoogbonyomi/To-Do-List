@@ -78,12 +78,12 @@ def main():
         """
         Main function to run the to-do list application
         """
-        print("\U0001F4CB Welcome to the to-do list app.\U0001F4CB")
+        print("\U0001F4CB Welcome to the to-do list app \U0001F4CB")
         while True:
             print("\n === To-Do List Menu===")
             print("Please select one of the following options")
             print("------------------------------------------")
-            print("1.Display to-do list")
+            print("1. Display to-do list")
             print("2. Add a task")
             print("3. Remove a task")
             print("4. View all tasks")
