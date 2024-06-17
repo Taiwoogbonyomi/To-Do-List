@@ -27,16 +27,16 @@ def display_tasks():
         else:
             print("\U0001F4CB Your to-do list.")
             for index,task in enumerate(tasks, start = 1):
-                print(f"(index). {task['description']} - Due: {task['due-date']} {task['due-time']}")
+                print(f"{index}. {task['description']} - Due: {task['due-date']} {task['due-time']}")
 
 
 #Function to add task to the to-do list
 def add_task():
         description = input("Enter task description: ") 
-        due_date = input("Enter due date (DD-MM-YY): ")
+        due_date = input("Enter due date (YYYY-MM-DD): ")
         due_time = input("Enter due-time (HH:MM): ")
         try:
-             datetime.datetime.strptime(due_date, "%D-%M-%Y")
+             datetime.datetime.strptime(due_date, "%Y-%m-%D")
              datetime.datetime.strptime(due_time, "%H:%M")       
         except ValueError:
              print("\U0000274C Invalid date or time format. Task not added.")
@@ -55,12 +55,12 @@ def add_task():
 #Function to remove a task from the to-do list
 def remove_task():
     display_tasks()
-    if task:
+    if tasks:
         try:
             index = int(input("Enter the number of the task to remove")) - 1
             if 0 <= index < len(tasks):
                 removed_task = tasks.pop(index)
-                print(f"Task '{description}' removed from your to-do list.")
+                print(f"\U0001F4ED Task '{description}' removed from your to-do list.")
             else:
                 print("\U0000274C Invalid index")
         except ValueError:
@@ -69,14 +69,14 @@ def remove_task():
         print("\U0001F4ED Your to-do list is already empty")            
 
 #function to view all tasks on the to-do list
-def view_all_task():
+def view_task():
     display_tasks() 
 
 
-    def main():
-        todo_list = ToDoList()
+def main():
+        
         """
-        Creates a loop to run the app
+        Main function to run the to-do list application
         """
         print("\U0001F4CB Welcome to the to-do list app. \U0001F4CB")
         while True:
@@ -89,7 +89,7 @@ def view_all_task():
             print("4. View all tasks")
             print("5. Quit")
 
-            choice = input("Enter your choice (1-5)")
+            choice = input("Enter your choice (1-5): ")
             
             if (choice == "1"):
                 display_tasks()
@@ -98,7 +98,7 @@ def view_all_task():
             elif (choice == "3"):
                 remove_task()
             elif (choice == "4"):
-                view_tasks()
+                view_task()
             elif (choice == "6"):
                 print("Quit application...")
                 break
@@ -107,6 +107,8 @@ def view_all_task():
                 
             print("\U0001F44B Goodbye ")
 
-
+# Run the main function to start the application
+if __name__ == "__main__":
+    main()
 
 
