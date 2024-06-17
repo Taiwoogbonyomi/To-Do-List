@@ -26,7 +26,7 @@ def display_tasks():
             print("\U0001F4ED Your to-do list is empty.")
         else:
             print("\U0001F4CB Your to-do list.")
-            for index,task in enumerate(tasks, start = 1):
+            for index,task in enumerate(tasks, start=1):
                 print(f"{index}. {task['description']} - Due: {task['due-date']} {task['due-time']}")
 
 
@@ -36,7 +36,7 @@ def add_task():
         due_date = input("Enter due date (YYYY-MM-DD): ")
         due_time = input("Enter due-time (HH:MM): ")
         try:
-             datetime.datetime.strptime(due_date, "%Y-%m-%D")
+             datetime.datetime.strptime(due_date, "%Y-%m-%d")
              datetime.datetime.strptime(due_time, "%H:%M")       
         except ValueError:
              print("\U0000274C Invalid date or time format. Task not added.")
@@ -69,7 +69,7 @@ def remove_task():
         print("\U0001F4ED Your to-do list is already empty")            
 
 #function to view all tasks on the to-do list
-def view_task():
+def view_tasks():
     display_tasks() 
 
 
@@ -78,7 +78,7 @@ def main():
         """
         Main function to run the to-do list application
         """
-        print("\U0001F4CB Welcome to the to-do list app. \U0001F4CB")
+        print("\U0001F4CB Welcome to the to-do list app.\U0001F4CB")
         while True:
             print("\n === To-Do List Menu===")
             print("Please select one of the following options")
@@ -98,14 +98,14 @@ def main():
             elif (choice == "3"):
                 remove_task()
             elif (choice == "4"):
-                view_task()
-            elif (choice == "6"):
+                view_tasks()
+            elif (choice == "5"):
                 print("Quit application...")
                 break
             else:
                 print("\U0000274C Invalid choice, Please enter a number from 1 to 5")
                 
-            print("\U0001F44B Goodbye ")
+            print(" Goodbye \U0001F44B \U0001F44B ")
 
 # Run the main function to start the application
 if __name__ == "__main__":
