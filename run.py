@@ -23,9 +23,9 @@ def display_instructions():
 #Function to display the to-do list
 def display_tasks():
         if not tasks:
-            print("Your to-do list is empty.")
+            print("\U0001F4ED Your to-do list is empty.")
         else:
-            print("Your to-do list.")
+            print("\U0001F4CB Your to-do list.")
             for index,task in enumerate(tasks, start = 1):
                 print(f"(index). {task['description']} - Due: {task['due-date']} {task['due-time']}")
 
@@ -39,7 +39,7 @@ def add_task():
              datetime.datetime.strptime(due_date, "%D-%M-%Y")
              datetime.datetime.strptime(due_time, "%H:%M")       
         except ValueError:
-             print("Invalid date or time format. Task not added.")
+             print("\U0000274C Invalid date or time format. Task not added.")
              return
 
         task = {
@@ -49,7 +49,7 @@ def add_task():
          }
         
         tasks.append(task)
-        print(f"Task '{description}' added to your to-do list")   
+        print(f"\U00002705 Task '{description}' added to your to-do list")   
     
 
 #Function to remove a task from the to-do list
@@ -62,11 +62,15 @@ def remove_task():
                 removed_task = tasks.pop(index)
                 print(f"Task '{description}' removed from your to-do list.")
             else:
-                print("Invalid index")
+                print("\U0000274C Invalid index")
         except ValueError:
-            print("Invalid input. Please enter a number.")
+            print("\U0000274C Invalid input. Please enter a number.")
     else:
-        print("Your to-do list is already empty")            
+        print("\U0001F4ED Your to-do list is already empty")            
+
+#function to view all tasks on the to-do list
+def view_all_task():
+    display_tasks() 
 
 
     def main():
@@ -74,9 +78,9 @@ def remove_task():
         """
         Creates a loop to run the app
         """
-        print("Welcome to the to-do list app.")
+        print("\U0001F4CB Welcome to the to-do list app. \U0001F4CB")
         while True:
-            print("\n=== To-Do List Menu===")
+            print("\n === To-Do List Menu===")
             print("Please select one of the following options")
             print("------------------------------------------")
             print("1.Display to-do list")
@@ -99,9 +103,9 @@ def remove_task():
                 print("Quit application...")
                 break
             else:
-                print("Invalid choice, Please enter a number from 1 to 5")
+                print("\U0000274C Invalid choice, Please enter a number from 1 to 5")
                 
-            print("Goodbye wave")
+            print("\U0001F44B Goodbye ")
 
 
 
