@@ -1,4 +1,8 @@
 import datetime
+import openpyxl
+from openpyxl import Workbook
+
+SPREADSHEET_FILE = "tasks.xlsx"
 
 #This is an empty list to store tasks
 tasks = []
@@ -60,6 +64,7 @@ def remove_task():
             index = int(input("Enter the number of the task to remove: ")) - 1
             if 0 <= index < len(tasks):
                 removed_task = tasks.pop(index)
+                print(f"Are you sure you want to remove this task?")
                 print(f"\U0001F4ED Task '{removed_task['description']}' removed from your to-do list.")
             else:
                 print("\U0000274C Invalid index")
@@ -67,10 +72,6 @@ def remove_task():
             print("\U0000274C Invalid input. Please enter a number.")
     else:
         print("\U0001F4ED Your to-do list is already empty")            
-
-#function to view all tasks on the to-do list
-def view_tasks():
-    display_tasks() 
 
 
 def main():
@@ -89,7 +90,7 @@ def main():
             print("4. View all tasks")
             print("5. Quit")
 
-            choice = input("Enter your choice (1-5): ")
+            choice = input("Enter your choice (1-4): ")
             
             if (choice == "1"):
                 display_tasks()
@@ -98,14 +99,13 @@ def main():
             elif (choice == "3"):
                 remove_task()
             elif (choice == "4"):
-                view_tasks()
-            elif (choice == "5"):
                 print("Quit application...")
+                print(" Goodbye \U0001F44B \U0001F44B ")
                 break
             else:
-                print("\U0000274C Invalid choice, Please enter a number from 1 to 5")
+                print("\U0000274C Invalid choice, Please enter a number from 1 to 4")
                 
-            print(" Goodbye \U0001F44B \U0001F44B ")
+            
 
 # Run the main function to start the application
 if __name__ == "__main__":
