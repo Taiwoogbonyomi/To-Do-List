@@ -4,6 +4,38 @@ from openpyxl import Workbook
 
 SPREADSHEET_FILE = "tasks.xlsx"
 
+def load_tasks():
+    """
+    Load tasks from the spreadsheet.
+    """
+    tasks = []
+    try:
+        workbook = openpyxl.load_workbook(SPREADSHEET_FILE)
+        sheet = workbook.active
+        tasks = []
+        for row in sheet.iter_rows(min_row=2, values_only=True):
+            task = {
+                "description": row[0],
+                "due_date": row[1],
+                "due_time": row[2]
+            }
+            tasks.append(task)
+
+    except FileNotFoundError:
+        workbook = Workbook()
+        sheet = workbook.active
+        sheet.append(["Description", "Due Date", "Due Time"])
+        workbook.save(SPREADSHEET_FILE)
+
+def save_tasks():
+    """Save tasks to the spreadsheet."""
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.append(["Description", "Due Date", "Due Time"])
+    for task in tasks:
+        sheet.append([task["description"], task["due_date"], task["due_time"]])
+    workbook.save(SPREADSHEET_FILE)
+
 #This is an empty list to store tasks
 tasks = []
 
@@ -18,8 +50,7 @@ def display_instructions():
     1. Display to-do list : View all tasks currently in the list.
     2. Add a task : Enter a new task to add to your to-do list.
     3. Remove a task : Choose a task by its index to remove the task from your list.
-    4. View all tasks : View all tasks you have on your to-do list.
-    5. Quit : Exit the application.
+    4. Quit : Exit the application.
     ===================================== 
     
     """)
@@ -43,7 +74,7 @@ def add_task():
              datetime.datetime.strptime(due_date, "%Y-%m-%d")
              datetime.datetime.strptime(due_time, "%H:%M")       
         except ValueError:
-             print("\U0000274C Invalid date or time format. Task not added.")
+             print("\U0000274C Invalid date or time format. Please try again.")
              return
 
         task = {
@@ -53,7 +84,8 @@ def add_task():
         }
         
         tasks.append(task)
-        print(f"\U00002705 Task '{description}' added to your to-do list")   
+        print(f"\U00002705 Task '{description}' added to your to-do list")
+        save_tasks()   
     
 
 #Function to remove a task from the to-do list
@@ -63,11 +95,16 @@ def remove_task():
         try:
             index = int(input("Enter the number of the task to remove: ")) - 1
             if 0 <= index < len(tasks):
-                removed_task = tasks.pop(index)
-                print(f"Are you sure you want to remove this task?")
-                print(f"\U0001F4ED Task '{removed_task['description']}' removed from your to-do list.")
+                removed_task = tasks[index]
+                confirm = input(f"Are you sure you want to remove the task '{removed_task['description']}'? (yes/no): ").lower()
+                if confirm == 'yes':
+                    tasks.pop(index)
+                    print(f"\U0001F4ED Task '{removed_task['description']}' removed successfully.")
+                    save_tasks()
+                else:
+                    print("\U0000274C Task removal cancelled.")
             else:
-                print("\U0000274C Invalid index")
+                print("\U0000274C Invalid input")
         except ValueError:
             print("\U0000274C Invalid input. Please enter a number.")
     else:
@@ -79,6 +116,8 @@ def main():
         """
         Main function to run the to-do list application
         """
+        load_tasks()
+        display_instructions()
         print("\U0001F4CB Welcome to the to-do list app \U0001F4CB")
         while True:
             print("\n === To-Do List Menu===")
@@ -87,8 +126,7 @@ def main():
             print("1. Display to-do list")
             print("2. Add a task")
             print("3. Remove a task")
-            print("4. View all tasks")
-            print("5. Quit")
+            print("4. Quit")
 
             choice = input("Enter your choice (1-4): ")
             
