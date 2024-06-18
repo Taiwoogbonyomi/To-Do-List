@@ -25,7 +25,7 @@ def display_tasks():
         if not tasks:
             print("\U0001F4ED Your to-do list is empty.")
         else:
-            print("\U0001F4CB Your to-do list.")
+            print("\U0001F4CB Your To-Do List.")
             for index,task in enumerate(tasks, start=1):
                 print(f"{index}. {task['description']} - Due: {task['due_date']} {task['due_time']}")
 
