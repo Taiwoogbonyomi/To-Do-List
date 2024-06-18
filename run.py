@@ -119,7 +119,7 @@ def remove_task():
                 else:
                     print("\U0000274C Task removal cancelled.")
             else:
-                print("\U0000274C Invalid input")
+                print("\U0000274C Invalid task number")
         except ValueError:
             print("\U0000274C Invalid input. Please enter a number.")
     else:
