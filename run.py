@@ -27,7 +27,7 @@ def display_tasks():
         else:
             print("\U0001F4CB Your to-do list.")
             for index,task in enumerate(tasks, start=1):
-                print(f"{index}. {task['description']} - Due: {task['due-date']} {task['due-time']}")
+                print(f"{index}. {task['description']} - Due: {task['due_date']} {task['due_time']}")
 
 
 #Function to add task to the to-do list
@@ -57,10 +57,10 @@ def remove_task():
     display_tasks()
     if tasks:
         try:
-            index = int(input("Enter the number of the task to remove")) - 1
+            index = int(input("Enter the number of the task to remove: ")) - 1
             if 0 <= index < len(tasks):
                 removed_task = tasks.pop(index)
-                print(f"\U0001F4ED Task '{description}' removed from your to-do list.")
+                print(f"\U0001F4ED Task '{removed_task['description']}' removed from your to-do list.")
             else:
                 print("\U0000274C Invalid index")
         except ValueError:
