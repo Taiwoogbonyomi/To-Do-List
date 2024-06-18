@@ -8,11 +8,11 @@ def load_tasks():
     """
     Load tasks from the spreadsheet.
     """
+    global tasks
     tasks = []
     try:
         workbook = openpyxl.load_workbook(SPREADSHEET_FILE)
         sheet = workbook.active
-        tasks = []
         for row in sheet.iter_rows(min_row=2, values_only=True):
             task = {
                 "description": row[0],
@@ -20,21 +20,27 @@ def load_tasks():
                 "due_time": row[2]
             }
             tasks.append(task)
+        print(f"Loaded {len(tasks)} tasks from the file.")
 
     except FileNotFoundError:
+        print(f"{SPREADSHEET_FILE} not found. Creating a new file.")
         workbook = Workbook()
         sheet = workbook.active
         sheet.append(["Description", "Due Date", "Due Time"])
         workbook.save(SPREADSHEET_FILE)
 
 def save_tasks():
-    """Save tasks to the spreadsheet."""
+    """
+    Save tasks to the spreadsheet.
+    """
+    print(f"Saving {len(tasks)} tasks to the file.")
     workbook = Workbook()
     sheet = workbook.active
     sheet.append(["Description", "Due Date", "Due Time"])
     for task in tasks:
         sheet.append([task["description"], task["due_date"], task["due_time"]])
     workbook.save(SPREADSHEET_FILE)
+    print("Tasks saved successfully")
 
 #This is an empty list to store tasks
 tasks = []
@@ -65,28 +71,37 @@ def display_tasks():
                 print(f"{index}. {task['description']} - Due: {task['due_date']} {task['due_time']}")
 
 
-#Function to add task to the to-do list
+# Function to add task to the to-do list
 def add_task():
-        description = input("Enter task description: ") 
+    description = input("Enter task description: ").strip()
+    if not description:
+            print("\U0000274C Task description cannot be empty. Please enter a valid description.")
+            return
+            
+
+    while True:
         due_date = input("Enter due date (YYYY-MM-DD): ")
         due_time = input("Enter due-time (HH:MM): ")
         try:
-             datetime.datetime.strptime(due_date, "%Y-%m-%d")
-             datetime.datetime.strptime(due_time, "%H:%M")       
+            due_date_obj = datetime.datetime.strptime(due_date, "%Y-%m-%d").date()
+            due_time_obj = datetime.datetime.strptime(due_time, "%H:%M").time()
+            if due_date_obj < datetime.date.today():
+                print("\U0000274C Due date cannot be in the past. Please enter a valid date.")
+                continue
+            break
         except ValueError:
-             print("\U0000274C Invalid date or time format. Please try again.")
-             return
+            print("\U0000274C Invalid date or time format. Please try again.")
 
-        task = {
-            "description": description,
-            "due_date": due_date,
-            "due_time": due_time
-        }
-        
-        tasks.append(task)
-        print(f"\U00002705 Task '{description}' added to your to-do list")
-        save_tasks()   
-    
+    task = {
+        "description": description,
+        "due_date": due_date,
+        "due_time": due_time
+    }
+
+    tasks.append(task)
+    print(f"\U00002705 Task '{description}' added to your to-do list")
+    save_tasks()
+
 
 #Function to remove a task from the to-do list
 def remove_task():
